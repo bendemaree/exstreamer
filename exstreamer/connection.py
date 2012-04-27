@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import util
 import socket
 
 class Connection:
@@ -8,15 +7,16 @@ class Connection:
         self.connection = None
         self.ip = ip
         self.port = port
-        
+        print "2"        
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print "2.5"
         s.connect((self.ip, self.port))
         self.connection = s
-
+        print "3"
     def __del__(self):
         self.connection.close()
         self.connection = None
-
+        print "4"
     def get_connection(self):
         return self.connection
 

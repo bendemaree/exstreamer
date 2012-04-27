@@ -10,7 +10,7 @@ class Exstreamer:
         
         self.heldconnection = connection.Connection(ip, port)
         self.connection = self.heldconnection.get_connection()
-
+        print "1"
         self.set_mute(False)
 
     def get_device_volume(self):

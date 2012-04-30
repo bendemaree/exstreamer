@@ -7,16 +7,11 @@ class Connection:
         self.connection = None
         self.ip = ip
         self.port = port
-        print "ip: "+ip
-        print "port: "+str(port)
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print "2.5"
         self.connection.connect((self.ip, self.port))
-        print "3"
     def __del__(self):
         self.connection.close()
         self.connection = None
-        print "4"
     def get_connection(self):
         return self.connection
 

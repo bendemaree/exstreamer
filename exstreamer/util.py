@@ -9,6 +9,10 @@ CMD_GETVOLUME = 'L=volume.ack'
 CMD_SETVOLUME = 'v='
 CMD_MUTEON = 'c=40'
 CMD_MUTEOFF = 'c=41'
+CMD_STOP = 'c=2'
+CMD_PAUSE = 'c=3'
+CMD_NEXT = 'c=4'
+CMD_PREVIOUS = 'c=5'
 CMD_GETCONFIG = 'L=getconfig.ack'
 
 CMD_TERMINATOR = '\n'
@@ -37,5 +41,5 @@ def recvall(con, timeout=2):
 def round_to_base(x, base=5):
     return int(base * round(float(x)/base))
 
-def wrap_command(command, content=''):
+def wrap(command, content=''):
     return command + str(content) + CMD_TERMINATOR

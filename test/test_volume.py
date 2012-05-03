@@ -4,7 +4,7 @@ from exstreamer.exstreamer import *
 
 def test_volume():
     # Setting
-    ex = Exstreamer('192.168.10.101')
+    ex = Exstreamer('192.168.10.100')
     ex.set_volume(15)
     assert ex.get_volume() == 15
     ex.set_volume(100)

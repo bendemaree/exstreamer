@@ -10,13 +10,13 @@ class Exstreamer:
         self.state = None
         
         self.heldconnection = connection.Connection(ip, port)
-        self.connection = self.heldconnection.get_connection()
+        self.connection = self.heldconnection
         self.set_mute(False)
         self.stop()
 
     def get_device_volume(self):
-        self.connection.send(util.wrap(util.CMD_GETVOLUME))
-        raw_vol = self.connection.recv(util.BUFFER_SIZE)
+        self.connection.sendcmd(util.CMD_GETVOLUME)
+        raw_vol = self.connection.recvcmd()
         vol_xml = etree.fromstring(raw_vol) # create xml representation
         return int(vol_xml.text) * 5  # convert to percentage
 
@@ -29,8 +29,8 @@ class Exstreamer:
         if(vol > 100 or vol < 0):
             raise InvalidVolumeLevel('That volume is out of range.')
         converted_vol = util.round_to_base(vol, 5) / 5  # convert to base 0 thru 20
-        self.connection.send(util.wrap(util.CMD_SETVOLUME, converted_vol))
-        self.connection.recv(util.BUFFER_SIZE)
+        self.connection.sendcmd(util.CMD_SETVOLUME, converted_vol)
+        self.connection.recvcmd()
         self.volume = vol
 
     def get_mute(self):
@@ -40,29 +40,29 @@ class Exstreamer:
 
     def set_mute(self, mute_state):
         if mute_state:
-            self.connection.send(util.wrap(util.CMD_MUTEON))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_MUTEON)
+            self.connection.recvcmd()
             self.volume = False
         else:
-            self.connection.send(util.wrap(util.CMD_MUTEOFF))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_MUTEOFF)
+            self.connection.recvcmd()
             self.volume = self.get_device_volume()
 
     def stop(self):
         # We can stop at any time; this command will always execute.
-        self.connection.send(util.wrap(util.CMD_STOP))
-        self.connection.recv(util.BUFFER_SIZE)
+        self.connection.sendcmd(util.CMD_STOP)
+        self.connection.recvcmd()
         self.state = "stop"
 
     def pause(self):
         # Force this to toggle.
         if self.state == "pause":
-            self.connection.send(util.wrap(util.CMD_PAUSE))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_PAUSE)
+            self.connection.recvcmd()
             self.state = "play"
         elif self.state == "play":
-            self.connection.send(util.wrap(util.CMD_PAUSE))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_PAUSE)
+            self.connection.recvcmd()
             self.state = "pause"
 
     def next(self):
@@ -71,14 +71,14 @@ class Exstreamer:
         # are going to override that to stay more in control. It's not a terribly
         # common scenario, anyway.
         if self.state == "play":
-            self.connection.send(util.wrap(util.CMD_NEXT))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_NEXT)
+            self.connection.recvcmd()
 
     def previous(self):
         # See comment of next()
         if self.state == "play":
-            self.connection.send(util.wrap(util.CMD_PREVIOUS))
-            self.connection.recv(util.BUFFER_SIZE)
+            self.connection.sendcmd(util.CMD_PREVIOUS)
+            self.connection.recvcmd()
 
     def get_status(self):
         if self.state == "play":

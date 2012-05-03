@@ -4,6 +4,7 @@ import time
 
 DEFAULT_COMMAND_PORT = 12302
 BUFFER_SIZE = 1024
+TIMEOUT = 10 # seconds
 
 CMD_GETVOLUME = 'L=volume.ack'
 CMD_SETVOLUME = 'v='
@@ -41,5 +42,5 @@ def recvall(con, timeout=2):
 def round_to_base(x, base=5):
     return int(base * round(float(x)/base))
 
-def wrap(command, content=''):
+def wrapcmd(command, content=''):
     return command + str(content) + CMD_TERMINATOR

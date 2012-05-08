@@ -19,6 +19,9 @@ class Connection:
     def sendcmd(self, command, content=''):
         self.connection.send(util.wrapcmd(command, content))
 
+    def sendsetting(self, command, content=[]):
+        self.connection.send(util.wrapsetting(command, content))
+    
     def recvcmd(self):
         return self.connection.recv(util.BUFFER_SIZE)
 

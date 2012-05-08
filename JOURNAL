@@ -1,0 +1,3 @@
+  * decided that the volume lock feature will not be implemented right now...why does it exist?
+  * need to implement the play method...i think it will probably accept some kind of ExstreamerStream object
+  * not implementing password functionality; implement app-side if needed

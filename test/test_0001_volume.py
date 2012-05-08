@@ -27,3 +27,19 @@ def test_volume():
     ex.set_volume(45)
     assert ex.get_mute() == False
     assert ex.get_volume() == 45
+
+    # Shuffle
+    assert ex.get_shuffle() == False
+
+    ex.set_shuffle(True)
+    assert ex.get_shuffle() == True
+    ex.set_shuffle(False)
+    assert ex.get_shuffle() == False
+
+    # Loudness
+    assert ex.get_loudness() == False
+
+    ex.set_loudness(True)
+    assert ex.get_loudness() == True
+    ex.set_loudness(False)
+    assert ex.get_loudness() == False

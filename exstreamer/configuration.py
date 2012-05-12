@@ -11,4 +11,4 @@ class Configuration:
     
     def set_ip(self, ip):
         print util.format_settings(ip.split('.'))
-        # self.exstreamer.connection.send(util.format_settings(ip.split('.')))
+        self.exstreamer.connection.sendcmd(util.format_settings(ip.split('.')))
